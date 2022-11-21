@@ -18,4 +18,14 @@ public class ProducerArtist extends Producer{
     public void setSongs(ArrayList<AudioSong> songs) {
         this.songs = songs;
     }
+
+    /**
+     * addSong: add a song to Artist
+     * @param songs refers to the song to add
+     * @return true or false depending on whether it satisfies the condition
+     */
+
+    public boolean addSong(AudioSong songs){
+        return this.songs.add(songs);
+    }
 }

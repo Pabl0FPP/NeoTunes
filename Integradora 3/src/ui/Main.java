@@ -1,7 +1,11 @@
 package ui;
 
 import java.util.Scanner;
+
+import model.AudioPodcast;
+import model.AudioSong;
 import model.ControllerNeoTunes;
+import model.Playlist;
 
 public class Main {
     private Scanner sc;
@@ -49,6 +53,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Main m=new Main();
+        m.menu();
 
     }
 
@@ -57,6 +63,7 @@ public class Main {
         int op=sc.nextInt();
 
         System.out.println("Type the nickname");
+        sc.nextLine();
         String nickname=sc.nextLine();
 
         System.out.println("Type the id");
@@ -71,6 +78,7 @@ public class Main {
         int year=sc.nextInt();
 
         System.out.println("type the name");
+        sc.nextLine();
         String name=sc.nextLine();
 
         System.out.println("Type the url");
@@ -91,6 +99,7 @@ public class Main {
         int op= sc.nextInt();
 
         System.out.println("Type the nickname");
+        sc.nextLine();
         String nickname=sc.nextLine();
 
         System.out.println("Type the id");
@@ -120,9 +129,14 @@ public class Main {
     public void registerAudio(){
 
         System.out.println("You want register\n1. Song\n2. Podcast");
-        int op=sc.nextInt();
 
-        System.out.println("Type the name");
+        int op=sc.nextInt();
+        System.out.println("What artist does the song belong to?(Type the position)");
+        System.out.println(controller.showProducer(op));
+        int index=sc.nextInt();
+
+        System.out.println("Type the name of the audio");
+        sc.nextLine();
         String name=sc.nextLine();
 
         System.out.println("Type the url");
@@ -138,10 +152,12 @@ public class Main {
         int typeSong=0;
         String description="";
         int typePodcast=0;
-
+        AudioSong song = null;
+        AudioPodcast podcast=null;
 
         if(op==1){
             System.out.println("Type the album of the song");
+            sc.nextLine();
             album=sc.nextLine();
 
             System.out.println("Type the Sale Value of the song");
@@ -149,16 +165,19 @@ public class Main {
 
             System.out.println("Type the song genre\n1. ROCK, 2. POP, 3. TRAP, 4. HOUSE");
             typeSong=sc.nextInt()-1;
+            song =new AudioSong(name, url, duration, numPlays, reproducedTime, album, saleValue, typeSong);
 
         } else if(op==2){
             System.out.println("Type the Podcast description");
+            sc.nextLine();
             description=sc.nextLine();
 
             System.out.println("Type the Podcast category\n1. POLITIC, 2. ENTERTAINMENT, 3. VIDEOGAMES, 4. FASHION");
             typePodcast=sc.nextInt()-1;
+            podcast=new AudioPodcast(name, url, duration, numPlays, reproducedTime, description, typePodcast);
         }
 
-        if(controller.registerAudio(op, name, url, duration, numPlays, reproducedTime, album, saleValue, typeSong, description, typePodcast)){
+        if(controller.registerAudio(index, op, name, url, duration, numPlays, reproducedTime, album, saleValue, typeSong, description, typePodcast, song, podcast)){
             System.out.println("Audio registered successfully");
 
         } else{
@@ -169,16 +188,29 @@ public class Main {
     }
 
     public void registerPlaylist(){
+        Playlist playlist=null;
+        String code="";
 
-        System.out.println("Type the PlaylistName");
+        System.out.println("What type of consumer are you going to add the playlist to?\n1. Standard\n2. Premium");
+        int option=sc.nextInt();
+        System.out.println(controller.showConsumer(option));
+
+        System.out.println("Type the number of the consumer to register the playlist to");
+        int indexConsumer=sc.nextInt();
+
+        System.out.println("Type the Playlist Name");
+        sc.nextLine();
         String name=sc.nextLine();
 
-        if(controller.registerPlaylist(name)){
+        System.out.println("Enter the type of the playlist\n1. SONGS, 2. PODCASTS, 3.BOTH");
+        int typePlaylist=sc.nextInt();
+        playlist=new Playlist(name, typePlaylist, code);
+
+        if(controller.registerPlaylist(option, indexConsumer,name, typePlaylist,code, playlist)){
             System.out.println("Playlist registered successfully");
 
         }else{
             System.out.println("Error registering the playlist");
-
         }
 
     }

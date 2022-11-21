@@ -19,4 +19,9 @@ public class AudioPodcast extends Audio {
         this.description = description;
     }
 
+
+    @Override
+    public void play() {
+
+    }
 }

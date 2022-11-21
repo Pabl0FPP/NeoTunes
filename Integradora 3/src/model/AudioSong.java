@@ -28,4 +28,9 @@ public class AudioSong extends Audio{
     public void setSaleValue(double saleValue) {
         this.saleValue = saleValue;
     }
+
+    @Override
+    public void play() {
+
+    }
 }

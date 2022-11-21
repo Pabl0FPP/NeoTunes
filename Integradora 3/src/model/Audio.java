@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Audio {
+public abstract class Audio implements Playable {
 
     private String name;
     private String url;
@@ -18,7 +18,7 @@ public abstract class Audio {
         this.reproducedTime = reproducedTime;
     }
 
-    public String getName() {
+    public String getName(String name) {
         return name;
     }
 
